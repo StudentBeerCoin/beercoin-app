@@ -1,4 +1,4 @@
-package com.example.beercoin
+package xyz.beercoin.app
 
 import io.flutter.embedding.android.FlutterActivity
 
