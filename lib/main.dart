@@ -49,7 +49,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       // ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
-        child: Center(
+        child: SafeArea(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
       ),
