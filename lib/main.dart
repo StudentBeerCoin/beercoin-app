@@ -4,6 +4,7 @@ import 'package:beercoin/cards/home.dart';
 import 'package:beercoin/cards/sell.dart';
 import 'package:beercoin/cards/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(const MyApp());
 
@@ -46,8 +47,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       // appBar: AppBar(
       //   title: const Text('BottomNavigationBar Sample'),
       // ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.dark,
+        child: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
