@@ -31,9 +31,6 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
-  final List<Widget> _widgetOptions = <Widget>[
-    home, account, buy, sell, settings,
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -43,6 +40,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _widgetOptions = <Widget>[
+      home,
+      Account(context: context).generate(),
+      buy,
+      sell,
+      settings,
+    ];
+
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text('Beercoin app'),
