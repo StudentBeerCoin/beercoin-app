@@ -31,7 +31,7 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = <Widget>[
     home, account, buy, sell, settings,
   ];
 
@@ -50,7 +50,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: SafeArea(
-          child: _widgetOptions.elementAt(_selectedIndex),
+          child: Container(
+            child: _widgetOptions.elementAt(_selectedIndex),
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
