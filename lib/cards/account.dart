@@ -80,7 +80,7 @@ class Account {
               row("Imię", "Jan"),
               row("Nazwisko", "Kowalski"),
               row("E-mail", "jan.kow@beercoin.xyz"),
-              row("Tokeny", "2137"),
+              row("Tokeny", "2137 🍺"),
             ],
           ),
         ),
