@@ -56,7 +56,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           child: SingleChildScrollView(
             child: Container(
               child: _widgetOptions.elementAt(_selectedIndex),
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             ),
           ),
         ),
