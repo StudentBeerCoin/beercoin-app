@@ -39,11 +39,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     List<Widget> _widgetOptions = <Widget>[
-      home,
+      Home(context: context).generate(),
       Account(context: context).generate(),
-      buy,
-      sell,
-      settings,
+      Buy(context: context).generate(),
+      Sell(context: context).generate(),
+      Settings(context: context).generate(),
     ];
 
     return Scaffold(

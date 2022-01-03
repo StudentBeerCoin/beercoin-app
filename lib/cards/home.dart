@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
-const Widget home = Text(
-  'Home',
-  style: TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-  ),
-);
+class Home {
+  BuildContext context;
+  Home({Key? key, required this.context});
+
+  Widget generate() {
+    return Text(
+      'Home',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+}

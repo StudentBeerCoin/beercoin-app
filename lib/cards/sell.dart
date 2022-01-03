@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
-const Widget sell = Text(
-  'Sell',
-  style: TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-  ),
-);
+class Sell {
+  BuildContext context;
+  Sell({Key? key, required this.context});
+
+  Widget generate() {
+    return Text(
+      'Sell',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+}
