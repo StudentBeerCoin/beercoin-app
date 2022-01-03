@@ -53,9 +53,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: SafeArea(
-          child: Container(
-            child: _widgetOptions.elementAt(_selectedIndex),
-            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+          child: SingleChildScrollView(
+            child: Container(
+              child: _widgetOptions.elementAt(_selectedIndex),
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+            ),
           ),
         ),
       ),
