@@ -13,4 +13,5 @@ jobs:
       with:
         flutter-version: '2.8.1'
     - run: flutter pub get
-    - run: flutter build ios --debug
+    - run: flutter build ios --debug --no-codesign
+    
