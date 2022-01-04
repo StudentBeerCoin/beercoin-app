@@ -11,7 +11,40 @@ class Account {
     return MediaQuery.of(context).size.width * factor;
   }
 
-  Widget row(String title, String value) {
+  Widget row(String title, String value, {bool tokens = false}) {
+    Widget text;
+    if (tokens) {
+      text = RichText(
+        text: TextSpan(
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: fontSize,
+            color: AppColor.black,
+          ),
+          children: [
+            TextSpan(text: value),
+            WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Tab(
+                    icon:
+                        Image.asset('assets/token.png', width: 20, height: 20)),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      text = Text(
+        value,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: fontSize,
+        ),
+      );
+    }
+
     return Padding(
       padding: EdgeInsets.only(
         bottom: screenWidthFactor(0.05),
@@ -27,13 +60,7 @@ class Account {
               ),
             ),
           ),
-          Text(
-            value,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: fontSize,
-            ),
-          ),
+          text,
         ],
       ),
     );
@@ -80,7 +107,7 @@ class Account {
               row("Imię", "Jan"),
               row("Nazwisko", "Kowalski"),
               row("E-mail", "jan.kow@beercoin.xyz"),
-              row("Tokeny", "2137 🍺"),
+              row("Tokeny", "2137", tokens: true),
             ],
           ),
         ),
