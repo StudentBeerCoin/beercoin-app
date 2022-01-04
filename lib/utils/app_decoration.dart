@@ -11,6 +11,11 @@ class AppDecoration {
     ],
   );
 
+  static BoxDecoration nearbyOfferDistance = BoxDecoration(
+    color: AppColor.secondary,
+    borderRadius: BorderRadius.circular(10),
+  );
+
   static BoxDecoration offer = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(10),
