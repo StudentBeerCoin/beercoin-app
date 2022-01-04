@@ -54,7 +54,7 @@ class Home {
                     ),
                     child: Column(
                       children: [
-                        Container(
+                        SizedBox(
                           height: cardHeight * 0.2,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,7 +67,7 @@ class Home {
                             ],
                           ),
                         ),
-                        Container(
+                        SizedBox(
                           height: cardHeight * 0.2,
                           width: double.infinity,
                           child: Text(
