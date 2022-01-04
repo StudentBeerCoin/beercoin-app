@@ -5,7 +5,7 @@ class Buy {
   Buy({Key? key, required this.context});
 
   Widget generate() {
-    return Text(
+    return const Text(
       'Buy',
       style: TextStyle(
         fontSize: 20,

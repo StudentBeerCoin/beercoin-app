@@ -5,7 +5,7 @@ class Settings {
   Settings({Key? key, required this.context});
 
   Widget generate() {
-    return Text(
+    return const Text(
       'Settings',
       style: TextStyle(
         fontSize: 20,

@@ -3,6 +3,8 @@ import 'package:beercoin/cards/buy.dart';
 import 'package:beercoin/cards/home.dart';
 import 'package:beercoin/cards/sell.dart';
 import 'package:beercoin/cards/settings.dart';
+import 'package:beercoin/utils/app_color.dart';
+import 'package:beercoin/utils/app_navigation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -61,35 +63,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Główna',
-            backgroundColor: Colors.grey,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Konto',
-            backgroundColor: Colors.grey,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Kup',
-            backgroundColor: Colors.grey,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.store),
-            label: 'Sprzedaj',
-            backgroundColor: Colors.grey,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Ustawienia',
-            backgroundColor: Colors.grey,
-          ),
+        items: <BottomNavigationBarItem>[
+          AppNavigationButton.home,
+          AppNavigationButton.account,
+          AppNavigationButton.buy,
+          AppNavigationButton.sell,
+          AppNavigationButton.settings,
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.black,
+        selectedItemColor: AppColor.headline,
         onTap: _onItemTapped,
       ),
     );

@@ -1,3 +1,5 @@
+import 'package:beercoin/utils/app_border.dart';
+import 'package:beercoin/utils/app_color.dart';
 import 'package:flutter/material.dart';
 
 class Account {
@@ -52,14 +54,9 @@ class Account {
           onPressed: onPressed,
           child: Text(value),
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.white),
-            foregroundColor: MaterialStateProperty.all(Colors.black),
-            side: MaterialStateProperty.all(
-              BorderSide(
-                width: 1,
-                color: Colors.black,
-              ),
-            ),
+            backgroundColor: MaterialStateProperty.all(AppColor.background),
+            foregroundColor: MaterialStateProperty.all(AppColor.black),
+            side: AppBorder.black,
           ),
         ),
       ),

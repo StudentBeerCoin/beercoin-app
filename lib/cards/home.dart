@@ -1,5 +1,6 @@
-import 'dart:ffi';
-
+import 'package:beercoin/utils/app_border.dart';
+import 'package:beercoin/utils/app_color.dart';
+import 'package:beercoin/utils/app_decoration.dart';
 import 'package:flutter/material.dart';
 
 class Home {
@@ -18,23 +19,12 @@ class Home {
       clipBehavior: Clip.hardEdge,
       width: screenWidthFactor(0.65),
       height: screenHeightFactor(0.2),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 5,
-            // offset: Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
+      decoration: AppDecoration.nearbyOffer,
       margin: EdgeInsets.all(screenWidthFactor(0.04)),
       child: Column(
         children: [
           Container(
-            height: (3 * screenHeightFactor(0.2)) / 4,
+            height: screenHeightFactor(0.2) * 0.75,
             padding: EdgeInsets.all(screenWidthFactor(0.02)),
             child: Row(
               children: [
@@ -47,20 +37,16 @@ class Home {
             ),
           ),
           SizedBox(
-            height: screenHeightFactor(0.2) / 4,
+            height: screenHeightFactor(0.2) * 0.25,
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {},
-              child: Text("SZCZEGÓŁY OFERTY"),
+              child: const Text("SZCZEGÓŁY OFERTY"),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Color(0xFFFFC83C)),
-                foregroundColor: MaterialStateProperty.all(Colors.black),
+                backgroundColor: MaterialStateProperty.all(AppColor.primary),
+                foregroundColor: MaterialStateProperty.all(AppColor.black),
                 elevation: MaterialStateProperty.all(0),
-                side: MaterialStateProperty.all(
-                  BorderSide(
-                    style: BorderStyle.none,
-                  ),
-                ),
+                side: AppBorder.none,
               ),
             ),
           ),
@@ -74,18 +60,7 @@ class Home {
       height: screenHeightFactor(0.15),
       width: screenWidthFactor(0.9),
       margin: EdgeInsets.only(bottom: screenWidthFactor(0.05)),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 5,
-            // offset: Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
+      decoration: AppDecoration.offer,
       child: Row(
         children: [
           Container(
@@ -107,7 +82,7 @@ class Home {
             ),
           ),
           Column(
-            children: [
+            children: const [
               Text("data"),
             ],
           )
@@ -123,7 +98,7 @@ class Home {
           padding: EdgeInsets.only(
             top: screenWidthFactor(0.05),
           ),
-          child: Text(
+          child: const Text(
             "Piwa w Twojej okolicy",
             style: TextStyle(
               fontSize: 20,
@@ -146,7 +121,7 @@ class Home {
           padding: EdgeInsets.only(
             bottom: screenWidthFactor(0.05),
           ),
-          child: Text(
+          child: const Text(
             "Twoje oferty",
             style: TextStyle(
               fontSize: 20,
