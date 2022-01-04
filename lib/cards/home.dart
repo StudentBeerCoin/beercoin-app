@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:math';
+
 import 'package:beercoin/utils/app_border.dart';
 import 'package:beercoin/utils/app_color.dart';
 import 'package:beercoin/utils/app_decoration.dart';
@@ -7,11 +10,13 @@ class Home {
   BuildContext context;
   Home({Key? key, required this.context});
   double screenWidthFactor(double factor) {
-    return MediaQuery.of(context).size.width * factor;
+    double width = min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
+    return width * factor;
   }
 
   double screenHeightFactor(double factor) {
-    return MediaQuery.of(context).size.height * factor;
+    double height = max(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
+    return height * factor;
   }
 
   Widget nearbyOffer(String name, double price, String from, double distance) {
