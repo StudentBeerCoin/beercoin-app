@@ -1,47 +1,102 @@
 import 'dart:math';
 
+import 'package:beercoin/entity/beer.dart';
 import 'package:beercoin/utils/app_border.dart';
 import 'package:beercoin/utils/app_color.dart';
 import 'package:beercoin/utils/app_decoration.dart';
+import 'package:beercoin/utils/app_tokens.dart';
 import 'package:flutter/material.dart';
 
 class Home {
   BuildContext context;
   Home({Key? key, required this.context});
   double screenWidthFactor(double factor) {
-    double width = min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
+    double width = min(
+        MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
     return width * factor;
   }
 
   double screenHeightFactor(double factor) {
-    double height = max(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
+    double height = max(
+        MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
     return height * factor;
   }
 
-  Widget nearbyOffer(String name, double price, String from, double distance) {
+  Widget nearbyOffer(Beer beer, double price, String from, double distance) {
+    double cardWidth = screenWidthFactor(0.65);
+    double cardHeight = screenHeightFactor(0.2);
+
     return Container(
       clipBehavior: Clip.hardEdge,
-      width: screenWidthFactor(0.65),
-      height: screenHeightFactor(0.2),
+      width: cardWidth,
+      height: cardHeight,
       decoration: AppDecoration.nearbyOffer,
       margin: EdgeInsets.all(screenWidthFactor(0.04)),
       child: Column(
         children: [
           Container(
-            height: screenHeightFactor(0.2) * 0.75,
+            height: cardHeight * 0.75,
             padding: EdgeInsets.all(screenWidthFactor(0.02)),
             child: Row(
               children: [
-                Image.network(
-                  "http://ocen-piwo.pl/upload/perla_export.webp",
-                  fit: BoxFit.cover,
-                  height: 100,
+                SizedBox(
+                  width: (cardWidth * 0.2) - screenWidthFactor(0.02),
+                  child: beer.image(),
+                ),
+                Container(
+                  width: (cardWidth * 0.8) - screenWidthFactor(0.02),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: cardHeight * 0.05,
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: cardHeight * 0.05,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${beer.brand} ${beer.name}",
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: AppTokens.fromDouble(price),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(bottom: cardHeight * 0.05),
+                        width: double.infinity,
+                        child: Text(
+                          "Od: " + from,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        decoration: AppDecoration.nearbyOfferDistance,
+                        padding: EdgeInsets.symmetric(
+                          vertical: cardHeight * 0.05,
+                        ),
+                        child: Center(
+                          child: Text(
+                            distance.toString() + " km od Ciebie",
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
           SizedBox(
-            height: screenHeightFactor(0.2) * 0.25,
+            height: cardHeight * 0.25,
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {},
@@ -59,7 +114,7 @@ class Home {
     );
   }
 
-  Widget offer() {
+  Widget offer(Beer beer) {
     return Container(
       height: screenHeightFactor(0.15),
       width: screenWidthFactor(0.9),
@@ -75,11 +130,7 @@ class Home {
             ),
             child: Row(
               children: [
-                Image.network(
-                  "http://ocen-piwo.pl/upload/perla_export.webp",
-                  fit: BoxFit.cover,
-                  height: 100,
-                ),
+                beer.image(),
               ],
             ),
           ),
@@ -94,6 +145,12 @@ class Home {
   }
 
   Widget generate() {
+    // For now, just generate some random data
+    Beer perla = Beer(
+      brand: "Perła",
+      name: "Export",
+    );
+
     return Column(
       children: [
         Container(
@@ -113,9 +170,9 @@ class Home {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              nearbyOffer("Perła", 21, "Janek", 1),
-              nearbyOffer("Perła", 37, "Paweł", 2),
-              nearbyOffer("Perła", 21, "Karol", 3.7),
+              nearbyOffer(perla, 21, "Janek", 1),
+              nearbyOffer(perla, 37, "Paweł", 2),
+              nearbyOffer(perla, 21, "Karol", 3.7),
             ],
           ),
         ),
@@ -133,11 +190,11 @@ class Home {
         ),
         Column(
           children: [
-            offer(),
-            offer(),
-            offer(),
-            offer(),
-            offer(),
+            offer(perla),
+            offer(perla),
+            offer(perla),
+            offer(perla),
+            offer(perla),
           ],
         ),
       ],
