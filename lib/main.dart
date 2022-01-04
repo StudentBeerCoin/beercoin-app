@@ -64,11 +64,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          AppNavigationButton.home,
-          AppNavigationButton.account,
-          AppNavigationButton.buy,
-          AppNavigationButton.sell,
-          AppNavigationButton.settings,
+          AppNavigationButton.make(Icons.home, 'Główna'),
+          AppNavigationButton.make(Icons.account_circle, 'Konto'),
+          AppNavigationButton.make(Icons.shopping_cart, 'Kup'),
+          AppNavigationButton.make(Icons.storefront, 'Sprzedaj'),
+          AppNavigationButton.make(Icons.settings, 'Ustawienia'),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: AppColor.headline,
