@@ -36,7 +36,7 @@ class Home {
         children: [
           Container(
             height: cardHeight * 0.75,
-            padding: EdgeInsets.all(screenWidthFactor(0.02)),
+            padding: EdgeInsets.symmetric(horizontal: screenWidthFactor(0.02)),
             child: Row(
               children: [
                 SizedBox(
@@ -48,48 +48,46 @@ class Home {
                   padding: EdgeInsets.symmetric(
                     horizontal: cardHeight * 0.05,
                   ),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          vertical: cardHeight * 0.05,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      vertical: cardHeight * 0.075,
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: cardHeight * 0.2,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '${beer.brand} ${beer.name}',
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              AppTokens.fromDouble(price),
+                            ],
+                          ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '${beer.brand} ${beer.name}',
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: AppTokens.fromDouble(price),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(bottom: cardHeight * 0.05),
-                        width: double.infinity,
-                        child: Text(
-                          'Od: ' + from,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        decoration: AppDecoration.nearbyOfferDistance,
-                        padding: EdgeInsets.symmetric(
-                          vertical: cardHeight * 0.05,
-                        ),
-                        child: Center(
+                        Container(
+                          height: cardHeight * 0.2,
+                          width: double.infinity,
                           child: Text(
-                            distance.toString() + ' km od Ciebie',
+                            'Od: ' + from,
                             style: const TextStyle(fontSize: 16),
                           ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          height: cardHeight * 0.2,
+                          width: double.infinity,
+                          decoration: AppDecoration.nearbyOfferDistance,
+                          child: Center(
+                            child: Text(
+                              distance.toString() + ' km od Ciebie',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
