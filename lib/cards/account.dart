@@ -1,5 +1,7 @@
+import 'package:beercoin/entity/user.dart';
 import 'package:beercoin/utils/app_border.dart';
 import 'package:beercoin/utils/app_color.dart';
+import 'package:beercoin/utils/app_tokens.dart';
 import 'package:flutter/material.dart';
 
 class Account {
@@ -14,27 +16,7 @@ class Account {
   Widget row(String title, String value, {bool tokens = false}) {
     Widget text;
     if (tokens) {
-      text = RichText(
-        text: TextSpan(
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: fontSize,
-            color: AppColor.black,
-          ),
-          children: [
-            TextSpan(text: value),
-            WidgetSpan(
-              alignment: PlaceholderAlignment.middle,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Tab(
-                    icon:
-                        Image.asset('assets/token.png', width: 20, height: 20)),
-              ),
-            ),
-          ],
-        ),
-      );
+      text = AppTokens.fromString(value);
     } else {
       text = Text(
         value,
@@ -89,15 +71,23 @@ class Account {
   }
 
   Widget generate() {
+    User user = User(
+      name: "Jan",
+      surname: "Kowalski",
+      email: "test@beercoin.xyz",
+      balance: 2137,
+    );
+
     return Column(
       children: <Widget>[
         Center(
           child: Container(
             padding: EdgeInsets.symmetric(
-              horizontal: screenWidthFactor(0.25),
               vertical: screenWidthFactor(0.1),
             ),
-            child: Image.network("https://sokoloowski.pl/avatar.png"),
+            child: user.image(
+              size: screenWidthFactor(0.6),
+            ),
           ),
         ),
         Padding(
@@ -106,10 +96,10 @@ class Account {
           ),
           child: Column(
             children: [
-              row("Imię", "Jan"),
-              row("Nazwisko", "Kowalski"),
-              row("E-mail", "jan.kow@beercoin.xyz"),
-              row("Tokeny", "2137", tokens: true),
+              row("Imię", user.name),
+              row("Nazwisko", user.surname),
+              row("E-mail", user.email),
+              row("Tokeny", user.balance.toString(), tokens: true),
             ],
           ),
         ),
