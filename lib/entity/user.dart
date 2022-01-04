@@ -21,7 +21,7 @@ class User {
 
   Image image({required double size}) {
     return Image.network(
-      "https://sokoloowski.pl/avatar.png",
+      'https://sokoloowski.pl/avatar.png',
       fit: BoxFit.cover,
       width: size,
       height: size,

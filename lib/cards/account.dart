@@ -36,7 +36,7 @@ class Account {
           Padding(
             padding: EdgeInsets.only(right: screenWidthFactor(0.05)),
             child: Text(
-              title + ":",
+              title + ':',
               style: TextStyle(
                 fontSize: fontSize,
               ),
@@ -72,9 +72,9 @@ class Account {
 
   Widget generate() {
     User user = User(
-      name: "Jan",
-      surname: "Kowalski",
-      email: "test@beercoin.xyz",
+      name: 'Jan',
+      surname: 'Kowalski',
+      email: 'test@beercoin.xyz',
       balance: 2137,
     );
 
@@ -96,15 +96,15 @@ class Account {
           ),
           child: Column(
             children: [
-              row("Imię", user.name),
-              row("Nazwisko", user.surname),
-              row("E-mail", user.email),
-              row("Tokeny", user.balance.toString(), tokens: true),
+              row('Imię', user.name),
+              row('Nazwisko', user.surname),
+              row('E-mail', user.email),
+              row('Tokeny', user.balance.toString(), tokens: true),
             ],
           ),
         ),
-        button("Edytuj profil", () {}),
-        button("Twoje oferty", () {}),
+        button('Edytuj profil', () {}),
+        button('Twoje oferty', () {}),
       ],
     );
   }
