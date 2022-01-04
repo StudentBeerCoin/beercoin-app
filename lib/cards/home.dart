@@ -65,11 +65,9 @@ class Home {
         children: [
           Container(
             height: double.infinity,
-            padding: EdgeInsets.fromLTRB(
-              screenWidthFactor(0.05),
-              screenWidthFactor(0.02),
-              screenWidthFactor(0.05),
-              screenWidthFactor(0.02),
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidthFactor(0.05),
+              vertical: screenWidthFactor(0.02),
             ),
             child: Row(
               children: [

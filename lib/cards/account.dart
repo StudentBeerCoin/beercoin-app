@@ -68,11 +68,9 @@ class Account {
 
   Widget button(String value, Function()? onPressed) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-        screenWidthFactor(0.05),
-        0,
-        screenWidthFactor(0.05),
-        screenWidthFactor(0.05),
+      padding: EdgeInsets.symmetric(
+        horizontal: screenWidthFactor(0.05),
+        vertical: screenWidthFactor(0.025),
       ),
       child: SizedBox(
         width: double.infinity,
@@ -95,13 +93,17 @@ class Account {
       children: <Widget>[
         Center(
           child: Container(
-            padding: EdgeInsets.fromLTRB(
-                screenWidthFactor(0.25), screenWidthFactor(0.1), screenWidthFactor(0.25), screenWidthFactor(0.1)),
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidthFactor(0.25),
+              vertical: screenWidthFactor(0.1),
+            ),
             child: Image.network("https://sokoloowski.pl/avatar.png"),
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: screenWidthFactor(0.1), right: screenWidthFactor(0.1)),
+          padding: EdgeInsets.symmetric(
+            horizontal: screenWidthFactor(0.1),
+          ),
           child: Column(
             children: [
               row("Imię", "Jan"),
