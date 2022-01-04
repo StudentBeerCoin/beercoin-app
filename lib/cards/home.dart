@@ -58,7 +58,7 @@ class Home {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "${beer.brand} ${beer.name}",
+                              '${beer.brand} ${beer.name}',
                               style: const TextStyle(fontSize: 16),
                             ),
                             Align(
@@ -72,7 +72,7 @@ class Home {
                         padding: EdgeInsets.only(bottom: cardHeight * 0.05),
                         width: double.infinity,
                         child: Text(
-                          "Od: " + from,
+                          'Od: ' + from,
                           style: const TextStyle(fontSize: 16),
                         ),
                       ),
@@ -84,7 +84,7 @@ class Home {
                         ),
                         child: Center(
                           child: Text(
-                            distance.toString() + " km od Ciebie",
+                            distance.toString() + ' km od Ciebie',
                             style: const TextStyle(fontSize: 16),
                           ),
                         ),
@@ -100,7 +100,7 @@ class Home {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {},
-              child: const Text("SZCZEGÓŁY OFERTY"),
+              child: const Text('SZCZEGÓŁY OFERTY'),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(AppColor.primary),
                 foregroundColor: MaterialStateProperty.all(AppColor.black),
@@ -114,31 +114,97 @@ class Home {
     );
   }
 
-  Widget offer(Beer beer) {
+  Widget offerRow(String key, String value) {
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Text(
+            key + ':',
+            style: const TextStyle(fontSize: 16),
+          ),
+        ),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget offer(Beer beer, double price, int amount) {
+    double cardWidth = screenWidthFactor(0.9);
+    double cardHeight = screenHeightFactor(0.15);
+
     return Container(
-      height: screenHeightFactor(0.15),
-      width: screenWidthFactor(0.9),
+      width: cardWidth,
+      height: cardHeight,
       margin: EdgeInsets.only(bottom: screenWidthFactor(0.05)),
+      padding: EdgeInsets.only(right: cardWidth * 0.02),
       decoration: AppDecoration.offer,
       child: Row(
         children: [
           Container(
-            height: double.infinity,
+            width: cardWidth * 0.2,
             padding: EdgeInsets.symmetric(
               horizontal: screenWidthFactor(0.05),
               vertical: screenWidthFactor(0.02),
             ),
-            child: Row(
+            child: beer.image(),
+          ),
+          Container(
+            width: cardWidth * 0.78,
+            padding: EdgeInsets.all(screenWidthFactor(0.025)),
+            child: Column(
               children: [
-                beer.image(),
+                SizedBox(
+                  height: cardHeight * 0.2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${beer.brand} ${beer.name}',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      AppTokens.fromDouble(price),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: cardHeight * 0.2,
+                  child: offerRow('Typ', '${beer.packing} ${beer.volume}ml'),
+                ),
+                SizedBox(
+                  height: cardHeight * 0.2,
+                  child: offerRow('Alkohol', '${beer.alcohol}%'),
+                ),
+                SizedBox(
+                  height: cardHeight * 0.2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      offerRow('Ilość', amount.toString()),
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Text(
+                              'Razem:',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                          AppTokens.fromDouble(amount * price),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-          Column(
-            children: const [
-              Text("data"),
-            ],
-          )
         ],
       ),
     );
@@ -147,8 +213,16 @@ class Home {
   Widget generate() {
     // For now, just generate some random data
     Beer perla = Beer(
-      brand: "Perła",
-      name: "Export",
+      id: 'perla_export',
+      brand: 'Perła',
+      name: 'Export',
+    );
+
+    Beer kustosz = Beer(
+      id: '90f32c6f4fc1303c4f3cd702411a0449',
+      brand: 'Kustosz',
+      name: 'Tequila',
+      packing: 'Puszka',
     );
 
     return Column(
@@ -158,7 +232,7 @@ class Home {
             top: screenWidthFactor(0.05),
           ),
           child: const Text(
-            "Piwa w Twojej okolicy",
+            'Piwa w Twojej okolicy',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -170,9 +244,9 @@ class Home {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              nearbyOffer(perla, 21, "Janek", 1),
-              nearbyOffer(perla, 37, "Paweł", 2),
-              nearbyOffer(perla, 21, "Karol", 3.7),
+              nearbyOffer(kustosz, 21, 'Janek', 1),
+              nearbyOffer(perla, 37, 'Paweł', 2),
+              nearbyOffer(perla, 21, 'Karol', 3.7),
             ],
           ),
         ),
@@ -181,7 +255,7 @@ class Home {
             bottom: screenWidthFactor(0.05),
           ),
           child: const Text(
-            "Twoje oferty",
+            'Twoje oferty',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -190,11 +264,10 @@ class Home {
         ),
         Column(
           children: [
-            offer(perla),
-            offer(perla),
-            offer(perla),
-            offer(perla),
-            offer(perla),
+            offer(perla, 21, 2),
+            offer(kustosz, 37, 1),
+            offer(kustosz, 21, 3),
+            offer(perla, 37, 7),
           ],
         ),
       ],
