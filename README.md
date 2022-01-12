@@ -2,11 +2,10 @@
 
 ![build](https://github.com/StudentBeerCoin/beercoin-app/actions/workflows/build.yml/badge.svg)
 
-<div style="text-align: center;">
-    <a href='https://play.google.com/store/apps/details?id=xyz.beercoin.app'>
-        <img style="height: 100px;" alt='pobierz z Google Play' src='https://play.google.com/intl/pl_pl/badges/static/images/badges/pl_badge_web_generic.png'/>
-    </a>
-</div>
+<a href='https://play.google.com/store/apps/details?id=xyz.beercoin.app'>
+    <img style="height: 100px;" alt='pobierz z Google Play'
+        src='https://play.google.com/intl/pl_pl/badges/static/images/badges/pl_badge_web_generic.png'/>
+</a>
 
 ## Wymagania
 
@@ -81,10 +80,7 @@ Tam, w sekcji "Aplikacja dewelopera" znajduje się certyfikat aplikacji, oznaczo
 
 **Uwaga:** by móc uruchomić aplikację na systemie iOS bez ponownej instalacji z poziomu komputera, należy zainstalować aplikację w trybie `release`, korzystając z opcji `--release`. W przeciwnym wypadku podczas próby uruchomienia aplikacji możemy otrzymać następujący komunikat:
 
-
-<div style="text-align: center;">
-    <img style="width: 20%;" alt="iOS - próba uruchomienia aplikacji w trybie `debug`" src="docs/ios_debug.png">
-</div>
+<img style="width: 20%;" alt="iOS - próba uruchomienia aplikacji w trybie `debug`" src="docs/ios_debug.png">
 
 ---
 
