@@ -19,7 +19,7 @@ class Beer {
 
   Image image({double height = 100}) {
     return Image.network(
-      'http://ocen-piwo.pl/upload/$id.webp',
+      'https://beercoin.xyz/api/assets/beer/$id',
       fit: BoxFit.cover,
       height: height,
     );
