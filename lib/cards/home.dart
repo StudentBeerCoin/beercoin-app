@@ -211,13 +211,13 @@ class Home {
   Widget generate() {
     // For now, just generate some random data
     Beer perla = Beer(
-      id: 'perla_export',
+      id: 't_perla',
       brand: 'Perła',
       name: 'Export',
     );
 
     Beer kustosz = Beer(
-      id: '90f32c6f4fc1303c4f3cd702411a0449',
+      id: 't_kustosz',
       brand: 'Kustosz',
       name: 'Tequila',
       packing: 'Puszka',
