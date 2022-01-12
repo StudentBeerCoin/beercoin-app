@@ -31,7 +31,7 @@
 Przed zbudowaniem aplikacji należy pobrać zależności:
 
 ```bash
-flutter pub get
+$ flutter pub get
 ```
 
 ## Budowanie aplikacji
