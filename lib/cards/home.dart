@@ -97,7 +97,14 @@ class Home {
             height: cardHeight * 0.25,
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                        'To jest ${beer.brand}. Za jedno piwo zapłacisz $price BC.'),
+                  ),
+                );
+              },
               child: const Text('SZCZEGÓŁY OFERTY'),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(AppColor.primary),
@@ -138,72 +145,95 @@ class Home {
     double cardHeight = screenHeightFactor(0.15);
 
     return Container(
+      clipBehavior: Clip.hardEdge,
       width: cardWidth,
       height: cardHeight,
-      margin: EdgeInsets.only(bottom: screenWidthFactor(0.05)),
-      padding: EdgeInsets.only(right: cardWidth * 0.02),
+      margin: EdgeInsets.only(
+        bottom: screenWidthFactor(0.05),
+      ),
       decoration: AppDecoration.offer,
-      child: Row(
-        children: [
-          Container(
-            width: cardWidth * 0.2,
-            padding: EdgeInsets.symmetric(
-              horizontal: screenWidthFactor(0.05),
-              vertical: screenWidthFactor(0.02),
+      child: ElevatedButton(
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                  'To jest ${beer.brand}. Za jedno piwo dostaniesz $price BC.'),
             ),
-            child: beer.image(),
+          );
+        },
+        style: ButtonStyle(
+          padding: MaterialStateProperty.all(
+            EdgeInsets.only(
+              right: cardWidth * 0.02,
+            ),
           ),
-          Container(
-            width: cardWidth * 0.78,
-            padding: EdgeInsets.all(screenWidthFactor(0.025)),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: cardHeight * 0.2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '${beer.brand} ${beer.name}',
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      AppTokens.fromDouble(price),
-                    ],
+          backgroundColor: MaterialStateProperty.all(AppColor.background),
+          foregroundColor: MaterialStateProperty.all(AppColor.black),
+          elevation: MaterialStateProperty.all(0),
+          side: AppBorder.none,
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: cardWidth * 0.2,
+              padding: EdgeInsets.symmetric(
+                horizontal: screenWidthFactor(0.05),
+                vertical: screenWidthFactor(0.02),
+              ),
+              child: beer.image(),
+            ),
+            Container(
+              width: cardWidth * 0.78,
+              padding: EdgeInsets.all(screenWidthFactor(0.025)),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: cardHeight * 0.2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${beer.brand} ${beer.name}',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        AppTokens.fromDouble(price),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: cardHeight * 0.2,
-                  child: offerRow('Typ', '${beer.packing} ${beer.volume}ml'),
-                ),
-                SizedBox(
-                  height: cardHeight * 0.2,
-                  child: offerRow('Alkohol', '${beer.alcohol}%'),
-                ),
-                SizedBox(
-                  height: cardHeight * 0.2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      offerRow('Ilość', amount.toString()),
-                      Row(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                              'Razem:',
-                              style: TextStyle(fontSize: 16),
+                  SizedBox(
+                    height: cardHeight * 0.2,
+                    child: offerRow('Typ', '${beer.packing} ${beer.volume}ml'),
+                  ),
+                  SizedBox(
+                    height: cardHeight * 0.2,
+                    child: offerRow('Alkohol', '${beer.alcohol}%'),
+                  ),
+                  SizedBox(
+                    height: cardHeight * 0.2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        offerRow('Ilość', amount.toString()),
+                        Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Text(
+                                'Razem:',
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ),
-                          ),
-                          AppTokens.fromDouble(amount * price),
-                        ],
-                      ),
-                    ],
+                            AppTokens.fromDouble(amount * price),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

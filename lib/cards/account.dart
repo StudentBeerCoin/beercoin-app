@@ -103,8 +103,21 @@ class Account {
             ],
           ),
         ),
-        button('Edytuj profil', () {}),
-        button('Twoje oferty', () {}),
+        button('Edytuj profil', () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Tu znajdziesz ustawienia swojego konta'),
+            ),
+          );
+        }),
+        button('Twoje oferty', () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                  'Tu znajdziesz swoje oferty oraz opcje zarządzania nimi'),
+            ),
+          );
+        }),
       ],
     );
   }
