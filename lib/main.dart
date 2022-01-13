@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:beercoin/cards/account.dart';
 import 'package:beercoin/cards/buy.dart';
 import 'package:beercoin/cards/home.dart';
@@ -5,6 +7,7 @@ import 'package:beercoin/cards/sell.dart';
 import 'package:beercoin/cards/settings.dart';
 import 'package:beercoin/utils/app_color.dart';
 import 'package:beercoin/utils/app_navigation_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -48,6 +51,22 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       Settings(context: context).generate(),
     ];
 
+    List<BottomNavigationBarItem> defaultList = <BottomNavigationBarItem>[
+      AppNavigationButton.make(Icons.home, 'Główna'),
+      AppNavigationButton.make(Icons.account_circle, 'Konto'),
+      AppNavigationButton.make(Icons.shopping_cart, 'Kup'),
+      AppNavigationButton.make(Icons.storefront, 'Sprzedaj'),
+      AppNavigationButton.make(Icons.settings, 'Ustawienia'),
+    ];
+    
+    List<BottomNavigationBarItem> cupertinoList = <BottomNavigationBarItem>[
+      AppNavigationButton.make(CupertinoIcons.house, 'Główna'),
+      AppNavigationButton.make(CupertinoIcons.person_crop_circle, 'Konto'),
+      AppNavigationButton.make(CupertinoIcons.cart, 'Kup'),
+      AppNavigationButton.make(Icons.storefront, 'Sprzedaj'),
+      AppNavigationButton.make(CupertinoIcons.settings, 'Ustawienia'),
+    ];
+
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text('Beercoin app'),
@@ -63,13 +82,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          AppNavigationButton.make(Icons.home, 'Główna'),
-          AppNavigationButton.make(Icons.account_circle, 'Konto'),
-          AppNavigationButton.make(Icons.shopping_cart, 'Kup'),
-          AppNavigationButton.make(Icons.storefront, 'Sprzedaj'),
-          AppNavigationButton.make(Icons.settings, 'Ustawienia'),
-        ],
+        items: Platform.isIOS ? cupertinoList : defaultList,
         currentIndex: _selectedIndex,
         selectedItemColor: AppColor.headline,
         onTap: _onItemTapped,
