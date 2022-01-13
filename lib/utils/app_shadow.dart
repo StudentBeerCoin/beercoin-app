@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AppShadow {
   static BoxShadow shadow = BoxShadow(
     color: AppColor.gray,
-    spreadRadius: 5,
-    blurRadius: 5,
+    spreadRadius: 1,
+    blurRadius: 1,
   );
 }
