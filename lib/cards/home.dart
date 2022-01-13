@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:beercoin/entity/beer.dart';
+import 'package:beercoin/entity/offer.dart';
+import 'package:beercoin/entity/user.dart';
 import 'package:beercoin/utils/app_border.dart';
 import 'package:beercoin/utils/app_color.dart';
 import 'package:beercoin/utils/app_decoration.dart';
@@ -12,17 +14,22 @@ class Home {
   Home({Key? key, required this.context});
   double screenWidthFactor(double factor) {
     double width = min(
-        MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
+      MediaQuery.of(context).size.width,
+      MediaQuery.of(context).size.height,
+    );
     return width * factor;
   }
 
   double screenHeightFactor(double factor) {
     double height = max(
-        MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
+      MediaQuery.of(context).size.width,
+      MediaQuery.of(context).size.height,
+    );
     return height * factor;
   }
 
   Widget nearbyOffer(Beer beer, double price, String from, double distance) {
+    // TODO: refactor to use Offer objects
     double cardWidth = screenWidthFactor(0.65);
     double cardHeight = screenHeightFactor(0.2);
 
@@ -141,6 +148,7 @@ class Home {
   }
 
   Widget offer(Beer beer, double price, int amount) {
+    // TODO: refactor to use Offer objects
     double cardWidth = screenWidthFactor(0.9);
     double cardHeight = screenHeightFactor(0.15);
 
@@ -154,10 +162,18 @@ class Home {
       decoration: AppDecoration.offer,
       child: ElevatedButton(
         onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                  'To jest ${beer.brand}. Za jedno piwo dostaniesz $price BC.'),
+          Navigator.pushNamed(
+            context,
+            '/offer_details',
+            arguments: Offer(
+              beer: beer,
+              seller: User(
+                name: 'Krzysztof',
+                surname: 'Kowalski',
+                email: 'kkowal@beercoin.xyz',
+              ),
+              price: price,
+              amount: amount,
             ),
           );
         },
