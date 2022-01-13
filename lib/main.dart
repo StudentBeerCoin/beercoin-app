@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:beercoin/cards/account.dart';
 import 'package:beercoin/cards/buy.dart';
 import 'package:beercoin/cards/home.dart';
+import 'package:beercoin/routes/offer_details.dart';
 import 'package:beercoin/cards/sell.dart';
 import 'package:beercoin/cards/settings.dart';
 import 'package:beercoin/utils/app_color.dart';
@@ -18,9 +19,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: "Beercoin",
-      home: MyStatefulWidget(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const MyStatefulWidget(),
+        '/offer_details': (context) => const OfferDetails(),
+      },
     );
   }
 }
@@ -58,7 +63,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       AppNavigationButton.make(Icons.storefront, 'Sprzedaj'),
       AppNavigationButton.make(Icons.settings, 'Ustawienia'),
     ];
-    
+
     List<BottomNavigationBarItem> cupertinoList = <BottomNavigationBarItem>[
       AppNavigationButton.make(CupertinoIcons.house, 'Główna'),
       AppNavigationButton.make(CupertinoIcons.person_crop_circle, 'Konto'),
@@ -75,9 +80,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         value: SystemUiOverlayStyle.dark,
         child: SafeArea(
           child: SingleChildScrollView(
-            child: Container(
-              child: _widgetOptions.elementAt(_selectedIndex),
-            ),
+            child: _widgetOptions.elementAt(_selectedIndex),
           ),
         ),
       ),
