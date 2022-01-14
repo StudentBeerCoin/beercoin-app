@@ -50,14 +50,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Future<void> _requestPermission() async {
     final ServiceStatus serviceStatus = await Permission.locationWhenInUse.serviceStatus;
     if (serviceStatus != ServiceStatus.enabled) {
-      print('Turn on location services before requesting permission.');
       return;
     }
 
     if (await Permission.locationWhenInUse.status == PermissionStatus.denied) {
       final PermissionStatus locationWhenInUseStatus = await Permission.locationWhenInUse.request();
       if (locationWhenInUseStatus == PermissionStatus.granted) {
-        print('Permission granted');
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -75,10 +73,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             );
           },
         );
-      } else if (locationWhenInUseStatus == PermissionStatus.denied) {
-        print('Permission denied. Show a dialog and again ask for the permission');
-      } else if (locationWhenInUseStatus == PermissionStatus.permanentlyDenied) {
-        print('Take the user to the settings page.');
+      } else if (locationWhenInUseStatus == PermissionStatus.denied ||
+          locationWhenInUseStatus == PermissionStatus.permanentlyDenied) {
         await openAppSettings();
       }
     }
