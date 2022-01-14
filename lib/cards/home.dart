@@ -1,14 +1,11 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 
-import 'package:beercoin/entity/beer.dart';
-import 'package:beercoin/entity/location.dart';
 import 'package:beercoin/entity/offer.dart';
-import 'package:beercoin/entity/user.dart';
 import 'package:beercoin/utils/app_border.dart';
 import 'package:beercoin/utils/app_color.dart';
 import 'package:beercoin/utils/app_decoration.dart';
 import 'package:beercoin/utils/app_tokens.dart';
-import 'package:flutter/material.dart';
 
 class Home {
   BuildContext context;
@@ -28,8 +25,6 @@ class Home {
     );
     return height * factor;
   }
-
-  Location currentLocation = Location(latitude: 0, longitude: 0);
 
   Widget nearbyOffer(Offer offer) {
     double cardWidth = screenWidthFactor(0.65);
@@ -89,10 +84,18 @@ class Home {
                           width: double.infinity,
                           decoration: AppDecoration.nearbyOfferDistance,
                           child: Center(
-                            child: Text(
-                              offer.distance(currentLocation).toString() +
-                                  ' km od Ciebie',
-                              style: const TextStyle(fontSize: 16),
+                            child: FutureBuilder(
+                              future: offer.distance(),
+                              initialData: '...',
+                              builder: (
+                                BuildContext context,
+                                AsyncSnapshot<String> text,
+                              ) {
+                                return Text(
+                                  text.data == null ? 'Wystąpił błąd' : text.data! + " km od Ciebie",
+                                  style: const TextStyle(fontSize: 16),
+                                );
+                              },
                             ),
                           ),
                         ),
@@ -248,20 +251,6 @@ class Home {
   }
 
   Widget generate() {
-    // For now, just generate some random data
-    Beer perla = Beer(
-      id: 't_perla',
-      brand: 'Perła',
-      name: 'Export',
-    );
-
-    Beer kustosz = Beer(
-      id: 't_kustosz',
-      brand: 'Kustosz',
-      name: 'Tequila',
-      packing: 'Puszka',
-    );
-
     return Column(
       children: [
         Container(

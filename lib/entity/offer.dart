@@ -26,8 +26,10 @@ class Offer {
     return amount * price;
   }
 
-  double distance(Location currentLocation) {
-    return -1;
+  Future<String> distance() async {
+    return await Location().current().then((currentLocation) {
+      return currentLocation.distanceTo(location).toStringAsFixed(1);
+    });
   }
 
   static Offer random() {

@@ -11,6 +11,7 @@ import 'package:beercoin/utils/app_navigation_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() => runApp(const MyApp());
 
@@ -46,8 +47,47 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     });
   }
 
+  Future<void> _requestPermission() async {
+    final ServiceStatus serviceStatus = await Permission.locationWhenInUse.serviceStatus;
+    if (serviceStatus != ServiceStatus.enabled) {
+      print('Turn on location services before requesting permission.');
+      return;
+    }
+
+    if (await Permission.locationWhenInUse.status == PermissionStatus.denied) {
+      final PermissionStatus locationWhenInUseStatus = await Permission.locationWhenInUse.request();
+      if (locationWhenInUseStatus == PermissionStatus.granted) {
+        print('Permission granted');
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Przyznano dostęp do lokalizacji'),
+              content: const Text('Uruchom ponownie aplikację, by uzyskać dostęp do wszystkich funkcji.'),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Navigator.popAndPushNamed(context, '/');
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      } else if (locationWhenInUseStatus == PermissionStatus.denied) {
+        print('Permission denied. Show a dialog and again ask for the permission');
+      } else if (locationWhenInUseStatus == PermissionStatus.permanentlyDenied) {
+        print('Take the user to the settings page.');
+        await openAppSettings();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    _requestPermission();
+
     List<Widget> _widgetOptions = <Widget>[
       Home(context: context).generate(),
       Account(context: context).generate(),
