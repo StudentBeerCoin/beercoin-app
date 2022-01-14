@@ -5,7 +5,7 @@ class AppTokens {
     return Row(
       children: [
         Text(
-          price.toString(),
+          price.toStringAsFixed(2),
           style: TextStyle(
             fontSize: size,
             fontWeight: FontWeight.bold,
