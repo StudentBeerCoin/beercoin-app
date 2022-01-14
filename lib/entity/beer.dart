@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:beercoin/utils/string_capitalize.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter/widgets.dart';
 
 class Beer {
@@ -22,6 +26,20 @@ class Beer {
       'https://beercoin.xyz/api/assets/beer/$id',
       fit: BoxFit.cover,
       height: height,
+    );
+  }
+
+  static Beer random() {
+    final faker = Faker();
+    final random = Random();
+
+    return Beer(
+      brand: faker.lorem.word().capitalize(),
+      name: faker.lorem.word().capitalize(),
+      id: faker.guid.guid(),
+      volume: [355, 500].elementAt(random.nextInt(2)),
+      alcohol: [4.5, 5.7, 6.0].elementAt(random.nextInt(3)),
+      packing: ['Butelka', 'Puszka'].elementAt(random.nextInt(2)),
     );
   }
 }

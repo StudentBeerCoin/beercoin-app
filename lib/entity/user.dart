@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:faker/faker.dart';
 import 'package:flutter/widgets.dart';
 
 class User {
@@ -25,6 +28,20 @@ class User {
       fit: BoxFit.cover,
       width: size,
       height: size,
+    );
+  }
+
+  static User random() {
+    final faker = Faker();
+    final random = Random();
+    final randomGenerator = RandomGenerator();
+
+    return User(
+      name: faker.person.firstName(),
+      surname: faker.person.lastName(),
+      email: faker.internet.email(),
+      phoneNumber: randomGenerator.fromPattern(['### ### ###']),
+      balance: random.nextDouble() * 100,
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:beercoin/entity/beer.dart';
+import 'package:beercoin/entity/location.dart';
 import 'package:beercoin/entity/offer.dart';
 import 'package:beercoin/entity/user.dart';
 import 'package:beercoin/utils/app_border.dart';
@@ -28,8 +29,9 @@ class Home {
     return height * factor;
   }
 
-  Widget nearbyOffer(Beer beer, double price, String from, double distance) {
-    // TODO: refactor to use Offer objects
+  Location currentLocation = Location(latitude: 0, longitude: 0);
+
+  Widget nearbyOffer(Offer offer) {
     double cardWidth = screenWidthFactor(0.65);
     double cardHeight = screenHeightFactor(0.2);
 
@@ -48,7 +50,7 @@ class Home {
               children: [
                 SizedBox(
                   width: (cardWidth * 0.2) - screenWidthFactor(0.02),
-                  child: beer.image(),
+                  child: offer.beer.image(),
                 ),
                 Container(
                   width: (cardWidth * 0.8) - screenWidthFactor(0.02),
@@ -67,10 +69,10 @@ class Home {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '${beer.brand} ${beer.name}',
+                                '${offer.beer.brand} ${offer.beer.name}',
                                 style: const TextStyle(fontSize: 16),
                               ),
-                              AppTokens.fromDouble(price),
+                              AppTokens.fromDouble(offer.price),
                             ],
                           ),
                         ),
@@ -78,7 +80,7 @@ class Home {
                           height: cardHeight * 0.2,
                           width: double.infinity,
                           child: Text(
-                            'Od: ' + from,
+                            'Od: ' + offer.seller.name,
                             style: const TextStyle(fontSize: 16),
                           ),
                         ),
@@ -88,7 +90,8 @@ class Home {
                           decoration: AppDecoration.nearbyOfferDistance,
                           child: Center(
                             child: Text(
-                              distance.toString() + ' km od Ciebie',
+                              offer.distance(currentLocation).toString() +
+                                  ' km od Ciebie',
                               style: const TextStyle(fontSize: 16),
                             ),
                           ),
@@ -105,11 +108,10 @@ class Home {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                        'To jest ${beer.brand}. Za jedno piwo zapłacisz $price BC.'),
-                  ),
+                Navigator.pushNamed(
+                  context,
+                  '/offer_details',
+                  arguments: offer,
                 );
               },
               child: const Text('SZCZEGÓŁY OFERTY'),
@@ -147,8 +149,7 @@ class Home {
     );
   }
 
-  Widget offer(Beer beer, double price, int amount) {
-    // TODO: refactor to use Offer objects
+  Widget offer(Offer offer) {
     double cardWidth = screenWidthFactor(0.9);
     double cardHeight = screenHeightFactor(0.15);
 
@@ -165,16 +166,7 @@ class Home {
           Navigator.pushNamed(
             context,
             '/offer_details',
-            arguments: Offer(
-              beer: beer,
-              seller: User(
-                name: 'Krzysztof',
-                surname: 'Kowalski',
-                email: 'kkowal@beercoin.xyz',
-              ),
-              price: price,
-              amount: amount,
-            ),
+            arguments: offer,
           );
         },
         style: ButtonStyle(
@@ -196,7 +188,7 @@ class Home {
                 horizontal: screenWidthFactor(0.05),
                 vertical: screenWidthFactor(0.02),
               ),
-              child: beer.image(),
+              child: offer.beer.image(),
             ),
             Container(
               width: cardWidth * 0.78,
@@ -209,27 +201,28 @@ class Home {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${beer.brand} ${beer.name}',
+                          '${offer.beer.brand} ${offer.beer.name}',
                           style: const TextStyle(fontSize: 16),
                         ),
-                        AppTokens.fromDouble(price),
+                        AppTokens.fromDouble(offer.price),
                       ],
                     ),
                   ),
                   SizedBox(
                     height: cardHeight * 0.2,
-                    child: offerRow('Typ', '${beer.packing} ${beer.volume}ml'),
+                    child: offerRow(
+                        'Typ', '${offer.beer.packing} ${offer.beer.volume}ml'),
                   ),
                   SizedBox(
                     height: cardHeight * 0.2,
-                    child: offerRow('Alkohol', '${beer.alcohol}%'),
+                    child: offerRow('Alkohol', '${offer.beer.alcohol}%'),
                   ),
                   SizedBox(
                     height: cardHeight * 0.2,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        offerRow('Ilość', amount.toString()),
+                        offerRow('Ilość', offer.amount.toString()),
                         Row(
                           children: [
                             const Padding(
@@ -239,7 +232,7 @@ class Home {
                                 style: TextStyle(fontSize: 16),
                               ),
                             ),
-                            AppTokens.fromDouble(amount * price),
+                            AppTokens.fromDouble(offer.total()),
                           ],
                         ),
                       ],
@@ -287,11 +280,10 @@ class Home {
           padding: EdgeInsets.all(screenWidthFactor(0.02)),
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: [
-              nearbyOffer(kustosz, 21, 'Janek', 1),
-              nearbyOffer(perla, 37, 'Paweł', 2),
-              nearbyOffer(perla, 21, 'Karol', 3.7),
-            ],
+            children: List<Widget>.generate(
+              Random().nextInt(7) + 3,
+              (int i) => nearbyOffer(Offer.random()),
+            ),
           ),
         ),
         Container(
@@ -307,12 +299,10 @@ class Home {
           ),
         ),
         Column(
-          children: [
-            offer(perla, 21, 2),
-            offer(kustosz, 37, 1),
-            offer(kustosz, 21, 3),
-            offer(perla, 37, 7),
-          ],
+          children: List<Widget>.generate(
+            Random().nextInt(40) + 10,
+            (int i) => offer(Offer.random()),
+          ),
         ),
       ],
     );
