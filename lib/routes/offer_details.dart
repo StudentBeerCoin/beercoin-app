@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:beercoin/entity/user.dart';
 import 'package:beercoin/routes/arguments/offer_details_arguments.dart';
+import 'package:beercoin/utils/app_border.dart';
+import 'package:beercoin/utils/app_color.dart';
 import 'package:beercoin/utils/app_tokens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -210,14 +212,29 @@ class OfferDetailsState extends State {
                       FutureBuilder<User>(
                         future: currentUser,
                         builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-                          return AppTokens.fromDouble(snapshot.data == null ? 0 : (snapshot.data!.balance - (offer.price * _counter)));
+                          return AppTokens.fromDouble(
+                              snapshot.data == null ? 0 : (snapshot.data!.balance - (offer.price * _counter)));
                         },
                       ),
                     ],
                   ),
-                  ElevatedButton(
-                    child: const Text("Kupuję"),
-                    onPressed: () {},
+                  Container(
+                    margin: EdgeInsets.only(top: screenHeightFactor(0.05)),
+                    width: double.infinity,
+                    height: 75,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Wykonanie transakcji...'),
+                        ));
+                      },
+                      child: Text(offer.type == 'sell' ? 'Kupuję' : 'Sprzedaję'),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(AppColor.primary),
+                        foregroundColor: MaterialStateProperty.all(AppColor.black),
+                        side: AppBorder.none,
+                      ),
+                    ),
                   ),
                 ],
               ),
