@@ -20,4 +20,25 @@ class AppWidget {
       ),
     );
   }
+
+  static Widget map(String key, String value, {double fontSize = 16}) {
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Text(
+            key + ':',
+            style: TextStyle(fontSize: fontSize),
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
 }

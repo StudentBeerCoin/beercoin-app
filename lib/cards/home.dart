@@ -1,4 +1,7 @@
 import 'dart:math';
+import 'package:beercoin/entity/user.dart';
+import 'package:beercoin/routes/arguments/offer_details_arguments.dart';
+import 'package:beercoin/utils/app_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:beercoin/entity/offer.dart';
@@ -17,6 +20,8 @@ class Home {
     );
     return width * factor;
   }
+
+  User currentUser = User.random();
 
   double screenHeightFactor(double factor) {
     double height = max(
@@ -111,7 +116,7 @@ class Home {
                 Navigator.pushNamed(
                   context,
                   '/offer_details',
-                  arguments: offer,
+                  arguments: OfferDetailsArguments(offer, currentUser),
                 );
               },
               child: const Text('SZCZEGÓŁY OFERTY'),
@@ -125,27 +130,6 @@ class Home {
           ),
         ],
       ),
-    );
-  }
-
-  Widget offerRow(String key, String value) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: Text(
-            key + ':',
-            style: const TextStyle(fontSize: 16),
-          ),
-        ),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
     );
   }
 
@@ -166,7 +150,7 @@ class Home {
           Navigator.pushNamed(
             context,
             '/offer_details',
-            arguments: offer,
+            arguments: OfferDetailsArguments(offer, currentUser),
           );
         },
         style: ButtonStyle(
@@ -210,18 +194,18 @@ class Home {
                   ),
                   SizedBox(
                     height: cardHeight * 0.2,
-                    child: offerRow('Typ', '${offer.beer.packing} ${offer.beer.volume}ml'),
+                    child: AppWidget.map('Typ', '${offer.beer.packing} ${offer.beer.volume}ml'),
                   ),
                   SizedBox(
                     height: cardHeight * 0.2,
-                    child: offerRow('Alkohol', '${offer.beer.alcohol}%'),
+                    child: AppWidget.map('Alkohol', '${offer.beer.alcohol}%'),
                   ),
                   SizedBox(
                     height: cardHeight * 0.2,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        offerRow('Ilość', offer.amount.toString()),
+                        AppWidget.map('Ilość', offer.amount.toString()),
                         Row(
                           children: [
                             const Padding(
