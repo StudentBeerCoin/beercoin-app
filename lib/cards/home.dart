@@ -75,7 +75,7 @@ class Home {
                           height: cardHeight * 0.2,
                           width: double.infinity,
                           child: Text(
-                            'Od: ' + offer.seller.name,
+                            'Od: ' + offer.owner.name,
                             style: const TextStyle(fontSize: 16),
                           ),
                         ),
@@ -87,10 +87,7 @@ class Home {
                             child: FutureBuilder(
                               future: offer.distance(),
                               initialData: '...',
-                              builder: (
-                                BuildContext context,
-                                AsyncSnapshot<String> text,
-                              ) {
+                              builder: (BuildContext context, AsyncSnapshot<String> text) {
                                 return Text(
                                   text.data == null ? 'Wystąpił błąd' : text.data! + " km od Ciebie",
                                   style: const TextStyle(fontSize: 16),
@@ -213,8 +210,7 @@ class Home {
                   ),
                   SizedBox(
                     height: cardHeight * 0.2,
-                    child: offerRow(
-                        'Typ', '${offer.beer.packing} ${offer.beer.volume}ml'),
+                    child: offerRow('Typ', '${offer.beer.packing} ${offer.beer.volume}ml'),
                   ),
                   SizedBox(
                     height: cardHeight * 0.2,
@@ -287,12 +283,21 @@ class Home {
             ),
           ),
         ),
-        Column(
-          children: List<Widget>.generate(
-            Random().nextInt(40) + 10,
-            (int i) => offer(Offer.random()),
+        FutureBuilder<List<Offer>>(
+            future: Offer.fetchOffers(),
+            initialData: const [],
+            builder: (BuildContext context, AsyncSnapshot<List<Offer>> snapshot) {
+              if (snapshot.hasData) {
+                return Column(
+                  children: snapshot.data!.map((e) => offer(e)).toList(),
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
           ),
-        ),
       ],
     );
   }
