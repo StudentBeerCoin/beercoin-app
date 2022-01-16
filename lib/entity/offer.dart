@@ -52,7 +52,7 @@ class Offer {
       owner: User.fromJson(json['owner']),
       beer: Beer.fromJson(json['beer']),
       amount: json['amount'] as int,
-      price: json['price'] as double,
+      price: (json['price'] as num).toDouble(),
       location: Location.fromJson(json['location']),
       type: json['type'] as String,
     );

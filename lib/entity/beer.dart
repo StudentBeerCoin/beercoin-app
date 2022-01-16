@@ -35,7 +35,7 @@ class Beer {
       brand: json['brand'] as String,
       name: json['name'] as String,
       volume: json['volume'] as int,
-      alcohol: json['alcohol'] as double,
+      alcohol: (json['alcohol'] as num).toDouble(),
       packing: json['packing'] as String,
     );
   }
