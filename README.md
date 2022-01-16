@@ -1,6 +1,6 @@
 # BeerCoin
 
-![build](https://github.com/StudentBeerCoin/beercoin-app/actions/workflows/build.yml/badge.svg)
+[![build](https://github.com/StudentBeerCoin/beercoin-app/actions/workflows/build.yml/badge.svg)](https://github.com/StudentBeerCoin/beercoin-app/actions/workflows/build.yml)
 [![wakatime](https://wakatime.com/badge/github/StudentBeerCoin/beercoin-app.svg)](https://wakatime.com/badge/github/StudentBeerCoin/beercoin-app)
 
 <a href='https://play.google.com/store/apps/details?id=xyz.beercoin.app'>
