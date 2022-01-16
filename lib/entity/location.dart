@@ -18,7 +18,7 @@ class Location {
 
     return Location(
       latitude: position.latitude,
-      longitude: position.latitude,
+      longitude: position.longitude,
     );
   }
 
