@@ -1,3 +1,4 @@
+import 'package:beercoin/utils/app_config.dart';
 import 'package:beercoin/utils/string_capitalize.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/widgets.dart';
@@ -21,7 +22,7 @@ class Beer {
 
   Image image({double height = 100}) {
     return Image.network(
-      'https://beercoin.xyz/api/assets/beer/$id',
+      '${AppConfig.host}/api/assets/beer/$id',
       fit: BoxFit.cover,
       height: height,
     );

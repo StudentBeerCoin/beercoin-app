@@ -1,7 +1,7 @@
-import 'package:beercoin/entity/location.dart';
 import 'package:beercoin/entity/user.dart';
 import 'package:beercoin/utils/app_border.dart';
 import 'package:beercoin/utils/app_color.dart';
+import 'package:beercoin/utils/app_config.dart';
 import 'package:beercoin/utils/app_tokens.dart';
 import 'package:flutter/material.dart';
 
@@ -73,7 +73,7 @@ class Account {
 
   Widget generate() {
     return FutureBuilder<User>(
-      future: User.fetchUser('68900ae2-8849-482e-88d3-c74cc1c661aa'),
+      future: AppConfig.currentUser,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           User user = snapshot.data!;

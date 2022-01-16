@@ -1,6 +1,6 @@
 import 'dart:math';
-import 'package:beercoin/entity/user.dart';
 import 'package:beercoin/routes/arguments/offer_details_arguments.dart';
+import 'package:beercoin/utils/app_config.dart';
 import 'package:beercoin/utils/app_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +13,7 @@ import 'package:beercoin/utils/app_tokens.dart';
 class Home {
   BuildContext context;
   Home({Key? key, required this.context});
+
   double screenWidthFactor(double factor) {
     double width = min(
       MediaQuery.of(context).size.width,
@@ -20,8 +21,6 @@ class Home {
     );
     return width * factor;
   }
-
-  Future<User> currentUser = User.fetchUser('68900ae2-8849-482e-88d3-c74cc1c661aa');
 
   double screenHeightFactor(double factor) {
     double height = max(
@@ -116,7 +115,7 @@ class Home {
                 Navigator.pushNamed(
                   context,
                   '/offer_details',
-                  arguments: OfferDetailsArguments(offer, currentUser),
+                  arguments: OfferDetailsArguments(offer, AppConfig.currentUser),
                 );
               },
               child: const Text('SZCZEGÓŁY OFERTY'),
@@ -150,7 +149,7 @@ class Home {
           Navigator.pushNamed(
             context,
             '/offer_details',
-            arguments: OfferDetailsArguments(offer, currentUser),
+            arguments: OfferDetailsArguments(offer, AppConfig.currentUser),
           );
         },
         style: ButtonStyle(
@@ -253,7 +252,7 @@ class Home {
               minWidth: MediaQuery.of(context).size.width,
             ),
             child: FutureBuilder<List<Offer>>(
-              future: Offer.fetchNearbyOffers(1.5),
+              future: Offer.fetchNearbyOffers(5),
               initialData: const [],
               builder: (BuildContext context, AsyncSnapshot<List<Offer>> snapshot) {
                 if (snapshot.hasData) {

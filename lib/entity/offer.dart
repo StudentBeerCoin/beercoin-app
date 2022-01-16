@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:convert';
+import 'package:beercoin/utils/app_config.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:beercoin/entity/beer.dart';
@@ -36,28 +37,60 @@ class Offer {
     });
   }
 
+  ///
+  /// Returns list of all offers
+  ///
   static Future<List<Offer>> fetchOffers() async {
-    final response = await http.get(Uri.parse('https://beercoin.xyz/api/offer/offers'));
-
-    if (response.statusCode == 200) {
-      return (jsonDecode(response.body) as List).map((e) => Offer.fromJson(e)).toList();
-    } else {
-      return [];
-    }
+    return http.get(Uri.parse('${AppConfig.host}/api/offer/offers')).then((res) {
+      if (res.statusCode == 200) {
+        return (jsonDecode(res.body) as List).map((e) => Offer.fromJson(e)).toList();
+      } else {
+        throw Exception('Failed to load offers');
+      }
+    });
   }
 
+  ///
+  /// Returns list of buying offers
+  ///
+  static Future<List<Offer>> fetchBuyingOffers() async {
+    return http.get(Uri.parse('${AppConfig.host}/api/offer/buy/offers')).then((res) {
+      if (res.statusCode == 200) {
+        return (jsonDecode(res.body) as List).map((e) => Offer.fromJson(e)).toList();
+      } else {
+        throw Exception('Failed to load offers');
+      }
+    });
+  }
+
+  ///
+  /// Returns list of selling offers
+  ///
+  static Future<List<Offer>> fetchSellingOffers() async {
+    return http.get(Uri.parse('${AppConfig.host}/api/offer/sell/offers')).then((res) {
+      if (res.statusCode == 200) {
+        return (jsonDecode(res.body) as List).map((e) => Offer.fromJson(e)).toList();
+      } else {
+        throw Exception('Failed to load offers');
+      }
+    });
+  }
+
+  ///
+  /// Returns list of offers in given [radius] (km)
+  ///
   static Future<List<Offer>> fetchNearbyOffers(double radius) async {
-    final currentLocation = await Location().current();
+    final location = await Location().current();
 
-    final response = await http.get(
-      Uri.parse('https://beercoin.xyz/api/offer/find/${currentLocation.latitude}/${currentLocation.longitude}/$radius'),
-    );
-
-    if (response.statusCode == 200) {
-      return (jsonDecode(response.body) as List).map((e) => Offer.fromJson(e)).toList();
-    } else {
-      return [];
-    }
+    return http
+        .get(Uri.parse('${AppConfig.host}/api/offer/find/${location.latitude}/${location.longitude}/$radius'))
+        .then((res) {
+      if (res.statusCode == 200) {
+        return (jsonDecode(res.body) as List).map((e) => Offer.fromJson(e)).toList();
+      } else {
+        throw Exception('Failed to load offers');
+      }
+    });
   }
 
   static Offer fromJson(Map<String, dynamic> json) {

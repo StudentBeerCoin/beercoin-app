@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:beercoin/utils/app_config.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:beercoin/entity/location.dart';
@@ -37,14 +38,14 @@ class User {
   }
 
   static Future<User> fetchUser(String id) async {
-   return http.get(Uri.parse('https://beercoin.xyz/api/user/$id/details'))
+   return http.get(Uri.parse('${AppConfig.host}/api/user/$id/details'))
     .then((res) {
       if (res.statusCode == 200) {
         return User.fromJson(json.decode(res.body));
       } else {
         throw Exception('Failed to load user');
       }
-    }).catchError((e) => print(e));
+    });
   }
 
   static User fromJson(Map<String, dynamic> json) {
