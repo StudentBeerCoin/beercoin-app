@@ -46,6 +46,21 @@ class Offer {
     }
   }
 
+  static Future<List<Offer>> fetchNearbyOffers(double radius) async {
+    final currentLocation = await Location().current();
+    print("${currentLocation.latitude}, ${currentLocation.longitude}");
+
+    final response = await http.get(
+      Uri.parse('https://beercoin.xyz/api/offer/find/${currentLocation.latitude}/${currentLocation.longitude}/$radius'),
+    );
+
+    if (response.statusCode == 200) {
+      return (jsonDecode(response.body) as List).map((e) => Offer.fromJson(e)).toList();
+    } else {
+      return [];
+    }
+  }
+
   static Offer fromJson(Map<String, dynamic> json) {
     return Offer(
       id: json['id'] as String,

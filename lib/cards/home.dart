@@ -264,10 +264,24 @@ class Home {
         SingleChildScrollView(
           padding: EdgeInsets.all(screenWidthFactor(0.02)),
           scrollDirection: Axis.horizontal,
-          child: Row(
-            children: List<Widget>.generate(
-              Random().nextInt(7) + 3,
-              (int i) => nearbyOffer(Offer.random()),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: MediaQuery.of(context).size.width,
+            ),
+            child: FutureBuilder<List<Offer>>(
+              future: Offer.fetchNearbyOffers(1.5),
+              initialData: const [],
+              builder: (BuildContext context, AsyncSnapshot<List<Offer>> snapshot) {
+                if (snapshot.hasData) {
+                  return Row(
+                    children: snapshot.data!.map((e) => nearbyOffer(e)).toList(),
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
             ),
           ),
         ),
@@ -284,20 +298,20 @@ class Home {
           ),
         ),
         FutureBuilder<List<Offer>>(
-            future: Offer.fetchOffers(),
-            initialData: const [],
-            builder: (BuildContext context, AsyncSnapshot<List<Offer>> snapshot) {
-              if (snapshot.hasData) {
-                return Column(
-                  children: snapshot.data!.map((e) => offer(e)).toList(),
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          ),
+          future: Offer.fetchOffers(),
+          initialData: const [],
+          builder: (BuildContext context, AsyncSnapshot<List<Offer>> snapshot) {
+            if (snapshot.hasData) {
+              return Column(
+                children: snapshot.data!.map((e) => offer(e)).toList(),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
       ],
     );
   }
