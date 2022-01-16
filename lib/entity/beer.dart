@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:beercoin/utils/string_capitalize.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/widgets.dart';
