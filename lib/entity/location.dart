@@ -23,10 +23,17 @@ class Location {
   }
 
   double distanceTo(Location location) {
-    final dx = longitude - location.longitude;
-    final dy = latitude - location.latitude;
+    const double R = 6371;
 
-    return sqrt(dx * dx + dy * dy);
+    final double dLat = (location.latitude - latitude) * pi / 180;
+    final double dLon = (location.longitude - longitude) * pi / 180;
+    final double lat1 = latitude * pi / 180;
+    final double lat2 = location.latitude * pi / 180;
+
+    final double a = sin(dLat / 2) * sin(dLat / 2) + sin(dLon / 2) * sin(dLon / 2) * cos(lat1) * cos(lat2);
+    final double c = 2 * asin(sqrt(a));
+
+    return R * c;
   }
 
   static Location fromJson(Map<String, dynamic> json) {
