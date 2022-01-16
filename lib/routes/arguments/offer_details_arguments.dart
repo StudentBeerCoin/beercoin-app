@@ -3,7 +3,7 @@ import 'package:beercoin/entity/user.dart';
 
 class OfferDetailsArguments {
   final Offer offer;
-  final User user;
+  final Future<User> user;
 
   OfferDetailsArguments(this.offer, this.user);
 }

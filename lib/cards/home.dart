@@ -21,7 +21,7 @@ class Home {
     return width * factor;
   }
 
-  User currentUser = User.random();
+  Future<User> currentUser = User.fetchUser('68900ae2-8849-482e-88d3-c74cc1c661aa');
 
   double screenHeightFactor(double factor) {
     double height = max(
@@ -89,7 +89,7 @@ class Home {
                           width: double.infinity,
                           decoration: AppDecoration.nearbyOfferDistance,
                           child: Center(
-                            child: FutureBuilder(
+                            child: FutureBuilder<String>(
                               future: offer.distance(),
                               initialData: '...',
                               builder: (BuildContext context, AsyncSnapshot<String> text) {

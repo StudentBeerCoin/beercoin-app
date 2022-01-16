@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:math';
+import 'package:http/http.dart' as http;
 
 import 'package:beercoin/entity/location.dart';
 import 'package:faker/faker.dart';
@@ -27,11 +29,22 @@ class User {
 
   Image image({required double size}) {
     return Image.network(
-      'https://sokoloowski.pl/avatar.png',
+      'https://sokoloowski.pl/avatar.png', // this is just placeholder, should be replaced with real avatar
       fit: BoxFit.cover,
       width: size,
       height: size,
     );
+  }
+
+  static Future<User> fetchUser(String id) async {
+   return http.get(Uri.parse('https://beercoin.xyz/api/user/$id/details'))
+    .then((res) {
+      if (res.statusCode == 200) {
+        return User.fromJson(json.decode(res.body));
+      } else {
+        throw Exception('Failed to load user');
+      }
+    }).catchError((e) => print(e));
   }
 
   static User fromJson(Map<String, dynamic> json) {
@@ -42,7 +55,7 @@ class User {
       surname: json['surname'] as String,
       email: json['email'] as String,
       phoneNumber: json['phoneNumber'] as String,
-      balance: json['balance'] as double,
+      balance: (json['balance'] as num).toDouble(),
       location: Location.fromJson(json['location']),
     );
   }

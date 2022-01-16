@@ -9,7 +9,7 @@ import 'package:beercoin/entity/offer.dart';
 import 'package:beercoin/utils/app_widget.dart';
 
 class OfferDetails extends StatefulWidget {
-  OfferDetails({Key? key}) : super(key: key);
+  const OfferDetails({Key? key}) : super(key: key);
 
   @override
   OfferDetailsState createState() => OfferDetailsState();
@@ -54,9 +54,8 @@ class OfferDetailsState extends State {
   Widget build(BuildContext context) {
     final OfferDetailsArguments args = ModalRoute.of(context)!.settings.arguments as OfferDetailsArguments;
     final Offer offer = args.offer;
-    final User currentUser = args.user;
+    final Future<User> currentUser = args.user;
 
-    // TODO: finish UI
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
@@ -189,7 +188,12 @@ class OfferDetailsState extends State {
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
-                      AppTokens.fromDouble(currentUser.balance),
+                      FutureBuilder<User>(
+                        future: currentUser,
+                        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+                          return AppTokens.fromDouble(snapshot.data == null ? 0 : snapshot.data!.balance);
+                        },
+                      ),
                     ],
                   ),
                   SizedBox(height: screenHeightFactor(0.01)),
@@ -203,7 +207,12 @@ class OfferDetailsState extends State {
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
-                      AppTokens.fromDouble(currentUser.balance - (offer.price * _counter)),
+                      FutureBuilder<User>(
+                        future: currentUser,
+                        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+                          return AppTokens.fromDouble(snapshot.data == null ? 0 : (snapshot.data!.balance - (offer.price * _counter)));
+                        },
+                      ),
                     ],
                   ),
                   ElevatedButton(

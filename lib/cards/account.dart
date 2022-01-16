@@ -72,54 +72,58 @@ class Account {
   }
 
   Widget generate() {
-    User user = User(
-      name: 'Jan',
-      surname: 'Kowalski',
-      email: 'test@beercoin.xyz',
-      balance: 2137,
-      location: Location(),
-    );
-
-    return Column(
-      children: <Widget>[
-        Center(
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              vertical: screenWidthFactor(0.1),
-            ),
-            child: user.image(
-              size: screenWidthFactor(0.6),
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: screenWidthFactor(0.1),
-          ),
-          child: Column(
-            children: [
-              row('Imię', user.name),
-              row('Nazwisko', user.surname),
-              row('E-mail', user.email),
-              row('Tokeny', user.balance.toString(), tokens: true),
+    return FutureBuilder<User>(
+      future: User.fetchUser('68900ae2-8849-482e-88d3-c74cc1c661aa'),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          User user = snapshot.data!;
+          return Column(
+            children: <Widget>[
+              Center(
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: screenWidthFactor(0.1),
+                  ),
+                  child: user.image(
+                    size: screenWidthFactor(0.6),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidthFactor(0.1),
+                ),
+                child: Column(
+                  children: [
+                    row('Imię', user.name),
+                    row('Nazwisko', user.surname),
+                    row('E-mail', user.email),
+                    row('Tokeny', user.balance.toString(), tokens: true),
+                  ],
+                ),
+              ),
+              button('Edytuj profil', () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Tu znajdziesz ustawienia swojego konta'),
+                  ),
+                );
+              }),
+              button('Twoje oferty', () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Tu znajdziesz swoje oferty oraz opcje zarządzania nimi'),
+                  ),
+                );
+              }),
             ],
-          ),
-        ),
-        button('Edytuj profil', () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Tu znajdziesz ustawienia swojego konta'),
-            ),
           );
-        }),
-        button('Twoje oferty', () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Tu znajdziesz swoje oferty oraz opcje zarządzania nimi'),
-            ),
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
           );
-        }),
-      ],
+        }
+      },
     );
   }
 }
