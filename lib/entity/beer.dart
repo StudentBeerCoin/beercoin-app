@@ -42,13 +42,12 @@ class Beer {
 
   static Beer random() {
     final faker = Faker();
-    final random = Random();
 
     return Beer(
       brand: faker.lorem.word().capitalize(),
       name: faker.lorem.word().capitalize(),
       id: faker.guid.guid(),
-      volume: [355, 500].elementAt(random.nextInt(2)),
+      volume: faker.randomGenerator.element([355, 500]),
       alcohol: faker.randomGenerator.element([4.5, 5.7, 6.0]),
       packing: faker.randomGenerator.element(['Butelka', 'Puszka']),
     );
