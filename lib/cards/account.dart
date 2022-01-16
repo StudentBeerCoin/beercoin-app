@@ -1,3 +1,4 @@
+import 'package:beercoin/entity/location.dart';
 import 'package:beercoin/entity/user.dart';
 import 'package:beercoin/utils/app_border.dart';
 import 'package:beercoin/utils/app_color.dart';
@@ -76,6 +77,7 @@ class Account {
       surname: 'Kowalski',
       email: 'test@beercoin.xyz',
       balance: 2137,
+      location: Location(),
     );
 
     return Column(
@@ -113,8 +115,7 @@ class Account {
         button('Twoje oferty', () {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text(
-                  'Tu znajdziesz swoje oferty oraz opcje zarządzania nimi'),
+              content: Text('Tu znajdziesz swoje oferty oraz opcje zarządzania nimi'),
             ),
           );
         }),

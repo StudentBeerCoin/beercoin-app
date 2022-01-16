@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:beercoin/entity/beer.dart';
 import 'package:beercoin/entity/location.dart';
@@ -7,19 +9,21 @@ import 'package:faker/faker.dart';
 
 class Offer {
   String id;
+  User owner;
   Beer beer;
-  User seller;
   int amount;
   double price;
   Location location;
+  String type;
 
   Offer({
     required this.id,
+    required this.owner,
     required this.beer,
-    required this.seller,
     required this.amount,
     required this.price,
     required this.location,
+    required this.type,
   });
 
   double total() {
@@ -32,6 +36,28 @@ class Offer {
     });
   }
 
+  static Future<List<Offer>> fetchOffers() async {
+    final response = await http.get(Uri.parse('https://beercoin.xyz/api/offer/offers'));
+
+    if (response.statusCode == 200) {
+      return (jsonDecode(response.body) as List).map((e) => Offer.fromJson(e)).toList();
+    } else {
+      return [];
+    }
+  }
+
+  static Offer fromJson(Map<String, dynamic> json) {
+    return Offer(
+      id: json['id'] as String,
+      owner: User.fromJson(json['owner']),
+      beer: Beer.fromJson(json['beer']),
+      amount: json['amount'] as int,
+      price: json['price'] as double,
+      location: Location.fromJson(json['location']),
+      type: json['type'] as String,
+    );
+  }
+
   static Offer random() {
     final faker = Faker();
     final random = Random();
@@ -39,10 +65,11 @@ class Offer {
     return Offer(
       id: faker.guid.guid(),
       beer: Beer.random(),
-      seller: User.random(),
+      owner: User.random(),
       amount: random.nextInt(20) + 1,
       price: ((random.nextDouble() + double.minPositive) * (random.nextInt(20) + 1)),
       location: Location.random(),
+      type: faker.randomGenerator.element(['buy', 'sell']),
     );
   }
 }

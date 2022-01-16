@@ -29,6 +29,13 @@ class Location {
     return sqrt(dx * dx + dy * dy);
   }
 
+  static Location fromJson(Map<String, dynamic> json) {
+    return Location(
+      latitude: json['x'] as double,
+      longitude: json['y'] as double,
+    );
+  }
+
   static Location random() {
     final Random random = Random();
 
