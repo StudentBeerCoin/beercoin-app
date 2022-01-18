@@ -1,4 +1,4 @@
-name: Static analysis
+name: static analysis
 on: [push]
 jobs:
   analyze:
